@@ -10,11 +10,11 @@ const app = express()
 
 const schema = new GraphQLSchema({
     query: new GraphQLObjectType({
-        name: 'Hello World',
+        name: 'HelloWorld',
         fields: () =>({
             message: {
             type: GraphQLString,
-            resolve: ()=> 'Hello World'}
+            resolve: ()=> 'HelloWorld'}
         })
     })
 })
