@@ -7,7 +7,6 @@ const {
   GraphQLList,
   GraphQLInt,
   GraphQLNonNull,
-  GraphQLSkipDirective,
 } = require("graphql");
 
 const app = express();
