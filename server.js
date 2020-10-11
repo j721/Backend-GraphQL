@@ -35,6 +35,27 @@ const BookType = new GraphQLObjectType({
     id: { type: GraphQLNonNull(GraphQLInt) },
     name: { type: GraphQLNonNull(GraphQLString) },
     authorId: { Type: GraphQLNonNull(GraphQLInt) },
+    author: {
+      type: AuthorType,
+      resolve: (book) => {
+        return authors.find((author) => author.id === book.authorID);
+      },
+    },
+  }),
+});
+
+const AuthorType = new GraphQLObjectType({
+  name: "Author",
+  description: "This represents an author of a book",
+  fields: () => ({
+    id: { type: GraphQLNonNull(GraphQLInt) },
+    name: { type: GraphQLNonNull(GraphQLString) },
+    books: {
+      type: new GraphQLList(BookType),
+      resolve: (author) => {
+        return books.filter((book) => book.authorId === author.id);
+      },
+    },
   }),
 });
 
@@ -51,16 +72,20 @@ const RootQueryType = new GraphQLObjectType({
 });
 
 const schema = new GraphQLSchema({
-  query: new GraphQLObjectType({
-    name: "HelloWorld",
-    fields: () => ({
-      message: {
-        type: GraphQLString,
-        resolve: () => "HelloWorld",
-      },
-    }),
-  }),
+  query: RootQueryType,
 });
+
+// const schema = new GraphQLSchema({
+//   query: new GraphQLObjectType({
+//     name: "HelloWorld",
+//     fields: () => ({
+//       message: {
+//         type: GraphQLString,
+//         resolve: () => "HelloWorld",
+//       },
+//     }),
+//   }),
+// });
 
 //routes
 app.use(
