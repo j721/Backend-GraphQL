@@ -7,6 +7,7 @@ const {
   GraphQLList,
   GraphQLInt,
   GraphQLNonNull,
+  GraphQLSkipDirective,
 } = require("graphql");
 
 const app = express();
@@ -92,8 +93,29 @@ const RootQueryType = new GraphQLObjectType({
   }),
 });
 
+const RootMutationType = new GraphQLObjectType({
+    name: 'Mutation',
+    description: 'Root Mutation',
+    fields: ()=>({
+        addBook: {
+            type: BookType,
+            description: 'Add a book',
+            args: {
+                name: {type: GraphQLNonNull(GraphQLString)},
+                authorId: {type: GraphQLNonNull(GraphQLInt)}
+            },
+            resolve: (parent, args)=>{
+                const book ={ id: books.length +1, name: args.name, authorId: args.authorId} //update books array, since we aren't using a database
+                books.push(book) //add into our books array
+                return book 
+            }
+        }
+    })
+})
+
 const schema = new GraphQLSchema({
-  query: RootQueryType
+  query: RootQueryType,
+  mutation: RootMutationType
 });
 
 // const schema = new GraphQLSchema({
