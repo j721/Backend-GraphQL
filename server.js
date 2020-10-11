@@ -121,7 +121,7 @@ const RootMutationType = new GraphQLObjectType({
                 authors.push(author) //add into our authors array
                 return author
             }
-        }
+        },
     })
 })
 
@@ -129,18 +129,6 @@ const schema = new GraphQLSchema({
   query: RootQueryType,
   mutation: RootMutationType
 });
-
-// const schema = new GraphQLSchema({
-//   query: new GraphQLObjectType({
-//     name: "HelloWorld",
-//     fields: () => ({
-//       message: {
-//         type: GraphQLString,
-//         resolve: () => "HelloWorld",
-//       },
-//     }),
-//   }),
-// });
 
 //routes
 app.use(
