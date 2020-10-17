@@ -134,6 +134,18 @@ const RootMutationType = new GraphQLObjectType({
                 return author
             }
         },
+        removeAuthor:{
+            type: AuthorType,
+            description: 'Remove an author',
+            args: {
+                name: {type: GraphQLNonNull(GraphQLString)}
+            },
+            resolve: (parent, args)=>{
+                const author ={id: authors.length +1, name: args. name}
+                authors.pop(author)
+                return author
+            }
+        }
     })
 })
 
