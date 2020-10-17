@@ -109,6 +109,19 @@ const RootMutationType = new GraphQLObjectType({
                 return book 
             }
         },
+        removeBook: {
+            type: BookType,
+            description: 'Remove a book',
+            args:{
+                name: {type: GraphQLNonNull(GraphQLString)},
+                authorId: {type: GraphQLNonNull(GraphQLInt)}
+            },
+            resolve: (parent, args)=>{
+                const book = {id: books.length +1, name: args.name, authorId: args.authorId}
+                books.pop(book)
+                return book
+            }
+        },
         addAuthor: {
             type: AuthorType,
             description: 'Add an author',
@@ -121,6 +134,18 @@ const RootMutationType = new GraphQLObjectType({
                 return author
             }
         },
+        removeAuthor:{
+            type: AuthorType,
+            description: 'Remove an author',
+            args: {
+                name: {type: GraphQLNonNull(GraphQLString)}
+            },
+            resolve: (parent, args)=>{
+                const author ={id: authors.length +1, name: args. name}
+                authors.pop(author)
+                return author
+            }
+        }
     })
 })
 
